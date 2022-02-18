@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="match_parent"
+    tools:context=".EPIActivity">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/logo_epi"
+        app:layout_constrainedWidth="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:adjustViewBounds="true"
+        app:layout_constraintLeft_toLeftOf="@id/lineavertical0"
+        app:layout_constraintRight_toRightOf="@id/lineavertical100"
+        app:layout_constraintBottom_toBottomOf="@id/lineahorizontal50"
+        app:layout_constraintTop_toTopOf="@id/lineahorizontal0"/>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/cvConnectar"
+        app:cardCornerRadius="20dp"
+        app:cardBackgroundColor="#05424C"
+        app:layout_constraintTop_toTopOf="@id/lineahorizontal50"
+        app:layout_constraintBottom_toBottomOf="@id/lineahorizontal75"
+        app:layout_constraintRight_toRightOf="@id/lineavertical100"
+        app:layout_constraintLeft_toLeftOf="@id/lineavertical0">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Conectar"
+            android:textSize="20sp"
+            android:layout_margin="15dp"
+            android:textColor="#FFFFFF"/>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.0"
+        android:id="@+id/lineavertical0"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="1.0"
+        android:id="@+id/lineavertical100"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.0"
+        android:id="@+id/lineahorizontal0"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5"
+        android:id="@+id/lineahorizontal50"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.75"
+        android:id="@+id/lineahorizontal75"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="1.0"
+        android:id="@+id/lineahorizontal100"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
