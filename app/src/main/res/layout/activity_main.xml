@@ -17,7 +17,7 @@
         app:layout_constrainedWidth="true"
         app:layout_constrainedHeight="true"
         android:layout_width="match_parent"
-        android:src="@drawable/p1rasecuencia"
+        android:src="@drawable/car"
         android:id="@+id/backgroundLottie"
         android:layout_height="wrap_content" />
 
@@ -29,7 +29,7 @@
         app:layout_constrainedWidth="true"
         app:layout_constrainedHeight="true"
         android:layout_width="match_parent"
-        android:src="@drawable/p1rasecuencia"
+        android:src="@drawable/car"
         android:id="@+id/lottieAnimation"
         android:layout_height="wrap_content" />
 
@@ -56,7 +56,7 @@
         android:visibility="gone"
         android:id="@+id/btoff"/>
 
-    <Switch
+    <Button
         app:layout_constraintTop_toTopOf="@id/guideline_main_horizontal60"
         app:layout_constraintBottom_toBottomOf="@id/guideline_main_horizontal75"
         app:layout_constraintRight_toRightOf="@id/guideline_main_vertical100"
@@ -64,24 +64,24 @@
         app:layout_constrainedWidth="true"
         app:layout_constrainedHeight="true"
         android:textSize="20sp"
-        android:text="Brazo alzado    "
+        android:text="Encender"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:id="@+id/switchEncendido"
+        android:id="@+id/Encender"
         tools:ignore="UseSwitchCompatOrMaterialXml" />
 
-    <Switch
+    <Button
         app:layout_constraintTop_toTopOf="@id/guideline_main_horizontal75"
         app:layout_constraintBottom_toBottomOf="@id/guideline_main_horizontal90"
         app:layout_constraintRight_toRightOf="@id/guideline_main_vertical100"
         app:layout_constraintLeft_toLeftOf="@id/guideline_main_vertical0"
         app:layout_constrainedWidth="true"
         app:layout_constrainedHeight="true"
-        android:textSize="20sp"
-        android:text="Flancos     "
+        android:textSize="26sp"
+        android:text="Apagar"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:id="@+id/switchFlancos"
+        android:id="@+id/Apagar"
         tools:ignore="UseSwitchCompatOrMaterialXml" />
 
     <TextView

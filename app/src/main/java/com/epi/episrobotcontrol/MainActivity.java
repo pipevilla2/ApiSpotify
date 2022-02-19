@@ -5,12 +5,14 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.UUID;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -25,13 +27,15 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.app.ActivityCompat;
+
 import com.airbnb.lottie.LottieAnimationView;
 
 public class MainActivity extends Activity {
 
     ImageView btnOn, btnOff;
     @SuppressLint("UseSwitchCompatOrMaterialCode")
-    private Switch switchEncendido, switchFlancos;
+    private Button encender, apagar;
     Handler bluetoothIn;
 
     final int handlerState = 0;
@@ -54,8 +58,8 @@ public class MainActivity extends Activity {
 
         btnOn = (ImageView) findViewById(R.id.bton);
         btnOff = (ImageView) findViewById(R.id.btoff);
-        switchEncendido = findViewById(R.id.switchEncendido);
-        switchFlancos = findViewById(R.id.switchFlancos);
+        encender = findViewById(R.id.Encender);
+        apagar = findViewById(R.id.Apagar);
         lottieAnimationView = (LottieAnimationView) findViewById(R.id.lottieAnimation);
 
         btAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -78,51 +82,23 @@ public class MainActivity extends Activity {
             }
         });
 
-        switchEncendido.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(b){
-                    mConnectedThread.write("4");
-                    lottieAnimationView.setAnimation(R.raw.arm_up);
-                    lottieAnimationView.setRepeatCount(200);
-                    lottieAnimationView.playAnimation();
-                }else {
-                    mConnectedThread.write("3");
-                    if(switchFlancos.isChecked()){
-                        switchFlancos.setChecked(false);
-                    }
-                    lottieAnimationView.setImageResource(R.drawable.p1rasecuencia);
-                }
+        encender.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                mConnectedThread.write("1");
             }
         });
 
-        switchFlancos.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(b){
-                    if(!switchEncendido.isChecked()){
-                        switchEncendido.setChecked(true);
-                    }
-                    lottieAnimationView.setAnimation(R.raw.flancos);
-                    lottieAnimationView.setRepeatCount(200);
-                    lottieAnimationView.playAnimation();
-                    mConnectedThread.write("5");
-                }else {
-                    mConnectedThread.write("4");
-                    lottieAnimationView.setAnimation(R.raw.arm_up);
-                    lottieAnimationView.setRepeatCount(200);
-                    lottieAnimationView.playAnimation();
-                }
-
+        apagar.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                mConnectedThread.write("0");
             }
         });
-
     }
 
 
     @SuppressLint("MissingPermission")
     private BluetoothSocket createBluetoothSocket(BluetoothDevice device) throws IOException {
-        return  device.createRfcommSocketToServiceRecord(BTMODULEUUID);
+        return device.createRfcommSocketToServiceRecord(BTMODULEUUID);
     }
 
     @SuppressLint("MissingPermission")
@@ -144,8 +120,17 @@ public class MainActivity extends Activity {
         } catch (IOException e) {
             Toast.makeText(getBaseContext(), "La creacción del Socket fallo", Toast.LENGTH_LONG).show();
         }
-        try
-        {
+        try {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
             btSocket.connect();
         } catch (IOException e) {
             try
