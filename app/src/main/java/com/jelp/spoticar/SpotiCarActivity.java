@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -15,7 +16,7 @@ import com.spotify.protocol.types.Track;
 public class SpotiCarActivity extends AppCompatActivity {
 
     private CardView cvConnect;
-    private static final String CLIENT_ID = "fec9df3eda024ea79ebfc02bf68fcf98";
+    private static final String CLIENT_ID = "9f72e5ab1a05407285d75d915f9e7adb";
     private static final String REDIRECT_URI = "com.jelp.spoticar://callback";
     private SpotifyAppRemote mSpotifyAppRemote;
 
@@ -54,6 +55,7 @@ public class SpotiCarActivity extends AppCompatActivity {
 
                     public void onFailure(Throwable throwable) {
                         Toast.makeText(getBaseContext(), throwable.getMessage(), Toast.LENGTH_LONG).show();
+                        Log.e("MyActivity", throwable.getMessage(), throwable);
                     }
                 });
     }
