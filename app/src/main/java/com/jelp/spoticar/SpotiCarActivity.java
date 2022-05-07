@@ -2,14 +2,22 @@ package com.jelp.spoticar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
+
+import com.spotify.android.appremote.api.ConnectionParams;
+import com.spotify.android.appremote.api.Connector;
+import com.spotify.android.appremote.api.SpotifyAppRemote;
+import com.spotify.protocol.types.Track;
 
 public class SpotiCarActivity extends AppCompatActivity {
 
     private CardView cvConnect;
+    private static final String CLIENT_ID = "fec9df3eda024ea79ebfc02bf68fcf98";
+    private static final String REDIRECT_URI = "com.jelp.spoticar://callback";
+    private SpotifyAppRemote mSpotifyAppRemote;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,16 +37,42 @@ public class SpotiCarActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        // We will start writing our code here.
-    }
+        ConnectionParams connectionParams =
+                new ConnectionParams.Builder(CLIENT_ID)
+                        .setRedirectUri(REDIRECT_URI)
+                        .showAuthView(true)
+                        .build();
 
-    private void connected() {
-        // Then we will write some more code here.
+        SpotifyAppRemote.connect(this, connectionParams,
+                new Connector.ConnectionListener() {
+
+                    public void onConnected(SpotifyAppRemote spotifyAppRemote) {
+                        mSpotifyAppRemote = spotifyAppRemote;
+                        Toast.makeText(getBaseContext(), "Conectado!", Toast.LENGTH_LONG).show();
+                        connected();
+                    }
+
+                    public void onFailure(Throwable throwable) {
+                        Toast.makeText(getBaseContext(), throwable.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        // Aaand we will finish off here.
+        SpotifyAppRemote.disconnect(mSpotifyAppRemote);
+    }
+
+    private void connected() {
+        mSpotifyAppRemote.getPlayerApi().play("spotify:playlist:37i9dQZF1DX2sUQwD7tbmL");
+        mSpotifyAppRemote.getPlayerApi()
+                .subscribeToPlayerState()
+                .setEventCallback(playerState -> {
+                    final Track track = playerState.track;
+                    if (track != null) {
+                        Toast.makeText(getBaseContext(), track.name + " by " + track.artist.name, Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 }
